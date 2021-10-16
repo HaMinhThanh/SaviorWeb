@@ -7,6 +7,8 @@ const app = express();
 // middleware
 app.use(express.json());
 
-app.listen(8080,()=>{
+const PORT = process.env.PORT || 8080
+
+app.listen(PORT,()=>{
     console.log("Backend sever is running!");
 })
