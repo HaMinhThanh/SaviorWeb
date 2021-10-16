@@ -1,0 +1,27 @@
+{
+  "name": "saviorweb",
+  "version": "1.0.0",
+  "description": "git config --global user.email \"18521401@gm.",
+  "main": "server.js",
+  "dependencies": {
+    "body-parser": "^1.19.0",
+    "cors": "^2.8.5",
+    "express": "^4.17.1",
+    "mongoose": "^6.0.11"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/HaMinhThanh/SaviorWeb.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/HaMinhThanh/SaviorWeb/issues"
+  },
+  "homepage": "https://github.com/HaMinhThanh/SaviorWeb#readme"
+}
