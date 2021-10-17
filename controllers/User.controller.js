@@ -1,7 +1,7 @@
 const User = require("../models/User.model");
 
 const bcrypt = require("bcrypt");
-const jwt = require("jsonwebtocken");
+const jwt = require("jsonwebtoken");
 
 
 const userController = {
@@ -10,6 +10,7 @@ const userController = {
             const user = await User.findOne({ email: req.body.email });
             if (user)
                 return res.status(400).json({ msg: 'The email already exists.' });
+
 
             const salt = await bcrypt.genSalt(10);
             const hashedPassword = await bcrypt.hash(req.body.password, salt);
@@ -20,24 +21,114 @@ const userController = {
                 password: hashedPassword,
             });
 
-            const user = await newUser.save();
+            const saveUser = await newUser.save();
 
-            const accesstoken = createAccessToken({ id: user._id });
-            const refreshtoken = createRefreshToken({ id: user._id });
-
+            const accesstoken = createAccessToken({ id: saveUser._id });
+            const refreshtoken = createRefreshToken({ id: saveUser._id });
+            
             // creat new cookie
-            //res.cookie(name,value[,options])
+            // res.cookie(name,value[,options])
             res.cookie('refreshtoken', refreshtoken, {
                 httpOnly: true,                 //Only access by web server
                 path: '/user/refresh_token',    //path of cookie, default is '/'
                 maxAge: 7 * 24 * 60 * 60 * 1000 //7day => ms
             });
-
-            res.status(200).json(user);
+        
+            res.status(200).json(saveUser);
         } catch (err) {
-            return res.status(500).json({ msg: err.msg });
+            console.log(err);
         }
+    },
+    login: async (req, res) => {
+        try {
 
+        } catch (err) {
+
+        }
+    },
+    logout: async (req, res) => {
+        try {
+
+        } catch (err) {
+
+        }
+    },
+    updateUserInfo: async (req, res) => {
+        try {
+
+        } catch (err) {
+
+        }
+    },
+    getUser: async (req, res) => {
+        try {
+
+        } catch (err) {
+
+        }
+    },
+    getAllUser: async (req, res) => {
+        try {
+
+        } catch (err) {
+
+        }
+    },
+    deleteUser: async (req, res) => {
+        try {
+
+        } catch (err) {
+
+        }
+    },
+    createUser: async (req, res) => {
+        try {
+
+        } catch (err) {
+
+        }
+    },
+    updateRole: async (req, res) => {
+        try {
+
+        } catch (err) {
+
+        }
+    },
+    updateUser: async (req, res) => {
+        try {
+
+        } catch (err) {
+
+        }
+    },
+    forgotPassword: async (req, res) => {
+        try {
+
+        } catch (err) {
+
+        }
+    },
+    resetPassword: async (req, res) => {
+        try {
+
+        } catch (err) {
+
+        }
+    },
+    changePassword: async (req, res) => {
+        try {
+
+        } catch (err) {
+
+        }
+    },
+    refreshToken: async (req, res) => {
+        try {
+
+        } catch (err) {
+
+        }
     }
 
 };
