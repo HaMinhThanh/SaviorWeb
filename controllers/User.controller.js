@@ -25,7 +25,7 @@ const userController = {
 
             const accesstoken = createAccessToken({ id: saveUser._id });
             const refreshtoken = createRefreshToken({ id: saveUser._id });
-            
+
             // creat new cookie
             // res.cookie(name,value[,options])
             res.cookie('refreshtoken', refreshtoken, {
@@ -33,7 +33,7 @@ const userController = {
                 path: '/user/refresh_token',    //path of cookie, default is '/'
                 maxAge: 7 * 24 * 60 * 60 * 1000 //7day => ms
             });
-        
+
             res.status(200).json(saveUser);
         } catch (err) {
             console.log(err);
@@ -41,16 +41,36 @@ const userController = {
     },
     login: async (req, res) => {
         try {
+            const user = await User.findOne({ email: req.body.email });
+            !user && res.status(404).json("user not found");
 
+            const validPassword = await bcrypt.compare(req.body.password, user.password)
+            if (!validPassword)
+                return res.status(400).json("wrong password");
+
+            const accesstoken = createAccessToken({ id: user._id });
+            const refreshtoken = createRefreshToken({ id: user._id });
+
+            // creat new cookie
+            // res.cookie(name,value[,options])
+            res.cookie('refreshtoken', refreshtoken, {
+                httpOnly: true,                 //Only access by web server
+                path: '/user/refresh_token',    //path of cookie, default is '/'
+                maxAge: 7 * 24 * 60 * 60 * 1000 //7day => ms
+            });
+
+            res.status(200).json({ message: "login successfully!" });
         } catch (err) {
-
+            res.status(500).json(err)
         }
     },
     logout: async (req, res) => {
         try {
+            res.clearCookie("refreshtoken", { path: "/user/refresh_token" });
+            return res.json({ message: "logged out" });
 
         } catch (err) {
-
+            res.status(500).json(err)
         }
     },
     updateUserInfo: async (req, res) => {
